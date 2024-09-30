@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   StyledForm,
   StyledInput,
@@ -8,10 +10,36 @@ import {
 } from "./LoginForm.styled";
 
 function LoginForm() {
+
+  const navigate = useNavigate();
+
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordInvalid, setPasswordInvalid] = React.useState(false);
   // const [enabled, setEnabled] = React.useState(false);
+
+  const login = async () => {
+    const response = await fetch("http://127.0.0.1:8000/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usernameOrEmail: username,
+        password: password,
+      }),
+      // credentials: 'include', // include cookies in the request
+    });
+    // console.log(response.text())
+    const data = await response.json();
+    if (data.success) {
+      console.log("Login successful");
+      navigate('/my-users');
+      // localStorage.setItem("user", JSON.stringify(data.user));
+    } else {
+      console.error(data.error);
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,25 +49,7 @@ function LoginForm() {
       setPasswordInvalid(true);
     } else {
       setPasswordInvalid(false);
-
-      const response = await fetch("http://127.0.0.1:8000/user?action=login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          usernameOrEmail: username,
-          password: password,
-        }),
-      });
-      // console.log(response.text());
-      const data = await response.json();
-      if (data.success) {
-        console.log("Login successful");
-        localStorage.setItem("user", JSON.stringify(data.user));
-      } else {
-        console.error(data.error);
-      }
+      login();
     }
   };
 

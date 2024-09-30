@@ -13,8 +13,11 @@ const PeopleTable = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://127.0.0.1:8000/person');
-
+            const response = await fetch('http://127.0.0.1:8000/person', {
+                method: 'GET',
+                credentials: 'include', // include cookies in the request
+            });
+            // console.log(response.text());
             const data = await response.json();
 
             setPeopleList(data);
@@ -27,9 +30,9 @@ const PeopleTable = () => {
         <StyledTable>
         <thead>
           <tr>
-            <StyledTh>Name</StyledTh>
-            <StyledTh>Age</StyledTh>
-            <StyledTh>City</StyledTh>
+            <StyledTh>ID</StyledTh>
+            <StyledTh>Firstname</StyledTh>
+            <StyledTh>Lastname</StyledTh>
           </tr>
         </thead>
         <tbody>

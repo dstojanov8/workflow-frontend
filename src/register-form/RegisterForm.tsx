@@ -10,35 +10,38 @@ function RegisterForm() {
     const [rePassword, setRePassword] = React.useState('');
     const [passwordInvalid, setPasswordInvalid] = React.useState(false);
 
+    const register = async () => {
+        const response = await fetch("http://127.0.0.1:8000/user/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                username,
+                password,
+                firstname,
+                lastname,
+            }),
+            credentials: 'include', // include cookies in the request
+        });
+        const data = await response.json();
+        if (data.success) {
+            console.log('Registration successful');
+        } else {
+            console.error(data.error);
+        }
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Hello');
 
         // validate password and set passwordInvalid state accordingly
         if (password.length < 8 || password !== rePassword) {
             setPasswordInvalid(true);
         } else {
             setPasswordInvalid(false);
-
-            const response = await fetch('http://127.0.0.1:8000/user?action=register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email,
-                    username,
-                    password,
-                    firstname,
-                    lastname,
-                }),
-            });
-            const data = await response.json();
-            if (data.success) {
-                console.log('Registration successful');
-            } else {
-                console.error(data.error);
-            }
+            register();
         }
     }
 

@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import App from './App';
-import Home from './pages/Home';
+import Home from './home-page/Home';
 import PeopleTable from "./people-table/PeopleTable";
 import LoginForm from "./login-form/LoginForm";
 import RegisterForm from "./register-form/RegisterForm";
+import AddPeople from "./add-people/AddPeople";
 
 const routes: RouteObject[] = [
   {
@@ -18,10 +19,10 @@ const routes: RouteObject[] = [
         path: 'my-users',
         element: <PeopleTable />,
       },
-      // {
-      //   path: 'add-users',
-      //   element: <AddPeople />
-      // }
+      {
+        path: 'add-user',
+        element: <AddPeople />
+      },
       // {
       //   path: 'user/:id',
       //   element: <UserProfile />,
