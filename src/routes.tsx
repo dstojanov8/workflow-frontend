@@ -3,8 +3,10 @@ import App from './App';
 import Home from './components/home-page/Home';
 import PeopleTable from "./components/people-table/PeopleTable";
 import LoginForm from "./components/login-form/LoginForm";
-import RegisterForm from "./components/register-form/RegisterForm";
 import AddPeople from "./components/add-people/AddPeople";
+import ProtectedRoute from "./components/protected-route/ProtectedRoute";
+import NotFoundRedirect from "./components/not-found-redirect/NotFoundRedirect";
+import RegisterForm from "./components/register-form/RegisterForm";
 
 const routes: RouteObject[] = [
   {
@@ -12,26 +14,31 @@ const routes: RouteObject[] = [
     element: <App />,
     children: [
       {
-        index: true,
-        element: <Home />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            index: true,
+            element: <Home />,
+          },
+          {
+            path: 'my-users',
+            element: <PeopleTable />,
+          },
+          {
+            path: 'add-user',
+            element: <AddPeople />
+          },
+          // {
+          //   path: 'user/:id',
+          //   element: <UserProfile />,
+          //   Here you can also define loaders for data fetching
+          //   loader: async ({ params }) => {
+          //     const response = await fetch(`/api/users/${params.id}`);
+          //     return response.json();
+          //   },
+          // },
+        ],
       },
-      {
-        path: 'my-users',
-        element: <PeopleTable />,
-      },
-      {
-        path: 'add-user',
-        element: <AddPeople />
-      },
-      // {
-      //   path: 'user/:id',
-      //   element: <UserProfile />,
-      //   Here you can also define loaders for data fetching
-      //   loader: async ({ params }) => {
-      //     const response = await fetch(`/api/users/${params.id}`);
-      //     return response.json();
-      //   },
-      // },
       {
         path: 'login',
         element: <LoginForm />
@@ -39,7 +46,11 @@ const routes: RouteObject[] = [
       {
         path: 'register',
         element: <RegisterForm />
-      }
+      },
+      {
+        path: '*',
+        element: <NotFoundRedirect />
+      },
     ],
   },
 ];

@@ -27,7 +27,8 @@ const accountSlice = createSlice({
             state.username = username;
             state.firstname = firstname;
             state.lastname = lastname;
-        }
+        },
+        logoutUser: () => initialState
     },
     //* Implement Async reducer for login
     // extraReducers: (builder) => {
@@ -54,6 +55,6 @@ const accountSlice = createSlice({
 //     }
 // )
 
-export const { loginUser } = accountSlice.actions;
+export const { loginUser, logoutUser } = accountSlice.actions;
 
 export default accountSlice.reducer;
