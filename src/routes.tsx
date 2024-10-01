@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import App from './App';
-import Home from './home-page/Home';
-import PeopleTable from "./people-table/PeopleTable";
-import LoginForm from "./login-form/LoginForm";
-import RegisterForm from "./register-form/RegisterForm";
-import AddPeople from "./add-people/AddPeople";
+import Home from './components/home-page/Home';
+import PeopleTable from "./components/people-table/PeopleTable";
+import LoginForm from "./components/login-form/LoginForm";
+import RegisterForm from "./components/register-form/RegisterForm";
+import AddPeople from "./components/add-people/AddPeople";
 
 const routes: RouteObject[] = [
   {
