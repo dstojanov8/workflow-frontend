@@ -84,9 +84,9 @@ function RegisterForm() {
             <StyledInput type="text" value={lastname} onChange={e => lastnameEntered(e)}/>
 
 
-            <StyledLabel invalid={passwordInvalid}>Password:</StyledLabel>
+            <StyledLabel $invalid={passwordInvalid}>Password:</StyledLabel>
             <StyledInput type="password" value={password} onChange={(e) => passwordEntered(e)} />
-            <StyledLabel invalid={passwordInvalid}>Repeat Password:</StyledLabel>
+            <StyledLabel $invalid={passwordInvalid}>Repeat Password:</StyledLabel>
             <StyledInput type="password" value={rePassword} onChange={(e) => rePasswordEntered(e)} />
             {passwordInvalid && <StyledAlert>Password is invalid or passwords don't match.</StyledAlert>}
             <StyledButton type="submit" disabled={!username || !password || !rePassword}>Register</StyledButton>

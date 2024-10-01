@@ -34,7 +34,7 @@ function LoginForm() {
     const data = await response.json();
     if (data.success) {
       console.log("Login successful");
-      navigate('/my-users');
+      navigate('/');
       // localStorage.setItem("user", JSON.stringify(data.user));
     } else {
       console.error(data.error);
@@ -79,7 +79,7 @@ function LoginForm() {
         value={username}
         onChange={(e) => usernameEntered(e)}
       />
-      <StyledLabel invalid={passwordInvalid}>Password:</StyledLabel>
+      <StyledLabel $invalid={passwordInvalid}>Password:</StyledLabel>
       <StyledInput
         type="password"
         value={password}

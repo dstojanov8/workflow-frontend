@@ -17,7 +17,7 @@ export const StyledForm = styled.form`
 `
 
 interface FormStyleProps {
-    invalid?: boolean;
+    $invalid?: boolean;
     enabled?: boolean;
 }
 
@@ -26,7 +26,7 @@ export const StyledLabel = styled.label<FormStyleProps>`
   margin-bottom: 10px;
   margin-top: 10px;
   font-weight: bold;
-  color: ${props => props.invalid ? 'red' : 'black'};
+  color: ${props => props.$invalid ? 'red' : 'black'};
 `
 
 export const StyledInput = styled.input`
