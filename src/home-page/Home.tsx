@@ -1,7 +1,7 @@
-import { Ball } from "./Home.styled";
+import { Text } from "./Home.styled";
 
 const Home = () => {
-  return <Ball />;
+  return <Text>HELLO</Text>;
 };
 
 export default Home;
