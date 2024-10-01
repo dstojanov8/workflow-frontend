@@ -8,9 +8,12 @@ import {
   StyledAlert,
   StyledLabel,
 } from "./LoginForm.styled";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../store/account/accountSlice";
 
 function LoginForm() {
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [username, setUsername] = React.useState("");
@@ -33,6 +36,7 @@ function LoginForm() {
     const data = await response.json();
     if (data.success) {
       console.log("Login successful");
+      dispatch(loginUser(data.user));
       navigate('/');
       // localStorage.setItem("user", JSON.stringify(data.user));
     } else {
