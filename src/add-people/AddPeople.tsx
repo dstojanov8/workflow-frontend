@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
     StyledForm,
     StyledInput,
@@ -10,6 +12,8 @@ const AddPeople = () => {
 
   const [firstname, setFirstname] = React.useState("");
   const [lastname, setLastname] = React.useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +33,8 @@ const AddPeople = () => {
         });
         
         if (response.ok) {
-          console.log("User added!");
+          console.log("User added!", response.text());
+          navigate('/my-users');
         } else {
           console.error('error');
         }

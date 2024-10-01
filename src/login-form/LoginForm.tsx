@@ -16,7 +16,6 @@ function LoginForm() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordInvalid, setPasswordInvalid] = React.useState(false);
-  // const [enabled, setEnabled] = React.useState(false);
 
   const login = async () => {
     const response = await fetch("http://127.0.0.1:8000/user/login", {
@@ -28,7 +27,7 @@ function LoginForm() {
         usernameOrEmail: username,
         password: password,
       }),
-      // credentials: 'include', // include cookies in the request
+      credentials: 'include', // include cookies in the request
     });
     // console.log(response.text())
     const data = await response.json();
@@ -41,7 +40,7 @@ function LoginForm() {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // validate password and set passwordInvalid state accordingly
@@ -55,21 +54,11 @@ function LoginForm() {
 
   const usernameEntered = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
-    // buttonEnabled(username, password)
   };
 
   const passwordEntered = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    // buttonEnabled(username, password)
   };
-
-  // const buttonEnabled = (username, password) => {
-  //     if(username.length > 0 && password.length > 0) {
-  //         setEnabled(true);
-  //     } else {
-  //         setEnabled(false);
-  //     }
-  // }
 
   return (
     <StyledForm onSubmit={handleSubmit}>
