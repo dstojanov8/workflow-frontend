@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyledForm, StyledInput, StyledButton, StyledAlert, StyledLabel } from './RegisterForm.styled';
+import { registerUserAsync } from '../../store/account/accountThunk';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useNavigate } from 'react-router-dom';
+
 
 function RegisterForm() {
     const [username, setUsername] = React.useState('');
@@ -10,28 +14,37 @@ function RegisterForm() {
     const [rePassword, setRePassword] = React.useState('');
     const [passwordInvalid, setPasswordInvalid] = React.useState(false);
 
-    const register = async () => {
-        const response = await fetch("http://127.0.0.1:8000/user/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email,
-                username,
-                password,
-                firstname,
-                lastname,
-            }),
-            credentials: 'include', // include cookies in the request
-        });
-        const data = await response.json();
-        if (data.success) {
-            console.log('Registration successful');
-        } else {
-            console.error(data.error);
-        }
-    }
+    const dispatch = useAppDispatch();
+    const {success} = useAppSelector((state) => state.account);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (success) navigate('/login');
+    }, [navigate, success]);
+
+    // const register = async () => {
+    //     const response = await fetch("http://127.0.0.1:8000/user/register", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             email,
+    //             username,
+    //             password,
+    //             firstname,
+    //             lastname,
+    //         }),
+    //         credentials: 'include', // include cookies in the request
+    //     });
+    //     const data = await response.json();
+    //     if (data.success) {
+    //         console.log('Registration successful');
+    //     } else {
+    //         console.error(data.error);
+    //     }
+    // }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -41,7 +54,8 @@ function RegisterForm() {
             setPasswordInvalid(true);
         } else {
             setPasswordInvalid(false);
-            register();
+            dispatch(registerUserAsync({ email, username, password, firstname, lastname }));
+            // register();
         }
     }
 

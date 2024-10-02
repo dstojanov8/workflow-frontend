@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -8,41 +8,46 @@ import {
   StyledAlert,
   StyledLabel,
 } from "./LoginForm.styled";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../../store/account/accountSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { loginUserAsync } from "../../store/account/accountThunk";
 
 function LoginForm() {
 
-  const dispatch = useDispatch();
+  const accountId = useAppSelector((state) => state.account.accountInfo?.id); 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordInvalid, setPasswordInvalid] = React.useState(false);
 
-  const login = async () => {
-    const response = await fetch("http://127.0.0.1:8000/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        usernameOrEmail: username,
-        password: password,
-      }),
-      credentials: 'include', // include cookies in the request
-    });
-    // console.log(response.text())
-    const data = await response.json();
-    if (data.success) {
-      console.log("Login successful");
-      dispatch(loginUser(data.user));
-      navigate('/');
-      // localStorage.setItem("user", JSON.stringify(data.user));
-    } else {
-      console.error(data.error);
-    }
-  }
+  useEffect(() => {
+    if (accountId) navigate('/');
+  }, [navigate, accountId]);
+
+  // const login = async () => {
+  //   const response = await fetch("http://127.0.0.1:8000/user/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       usernameOrEmail: username,
+  //       password: password,
+  //     }),
+  //     credentials: 'include', // include cookies in the request
+  //   });
+  //   // console.log(response.text())
+  //   const data = await response.json();
+  //   if (data.success) {
+  //     console.log("Login successful");
+  //     dispatch(loginUser(data.user));
+  //     navigate('/');
+  //     // localStorage.setItem("user", JSON.stringify(data.user));
+  //   } else {
+  //     console.error(data.error);
+  //   }
+  // }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,7 +57,8 @@ function LoginForm() {
       setPasswordInvalid(true);
     } else {
       setPasswordInvalid(false);
-      login();
+      dispatch(loginUserAsync({ usernameOrEmail: username, password }))
+      // login();
     }
   };
 

@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { NavbarContainer, Logo, NavLinks, NavLink } from './Navbar.styled';
 import { logoutUser } from '../../store/account/accountSlice';
-import { persistor, RootState } from '../../store/store';
+import { persistor } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 
 const Navbar = () => {
 
-  const accountId  = useSelector((state: RootState) => state.account.id);
+  const accountInfo  = useAppSelector((state) => state.account.accountInfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,7 +25,6 @@ const Navbar = () => {
     // and it is as no one is logged in so the app redirects to login.
     //
     // Some solutions include adding persist.flush() to login function
-    persistor.pause();
     dispatch(logoutUser());
     persistor.purge();
     navigate('/login');
@@ -34,7 +34,7 @@ const Navbar = () => {
     <NavbarContainer>
       <Logo>MyApp</Logo>
       <NavLinks>
-        {accountId ? 
+        {accountInfo ? 
           (
             <>
               <NavLink to="/">Home</NavLink>
