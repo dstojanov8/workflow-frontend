@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+
 import { StyledTable, StyledTh, StyledTd, StyledTr} from './PeopleTable.styled';
+
 
 type Person = {
     id: number;
@@ -11,18 +14,25 @@ const PeopleTable = () => {
 
     const [ peopeList, setPeopleList ] = useState([])
 
+    
     useEffect(() => {
+        const token = localStorage.getItem('userToken');
         const fetchData = async () => {
-            const response = await fetch('http://127.0.0.1:8000/person', {
-                method: 'GET',
-                credentials: 'include', // include cookies in the request
-            });
-            // console.log(response.text());
-            const data = await response.json();
-
-            setPeopleList(data);
-        }
-
+            try {
+                const config = {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                    },
+                    withCredentials: true, // include cookies in the request
+                }
+                const response = await axios.get('http://127.0.0.1:8000/person', config);
+    
+                setPeopleList(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+    
         fetchData();
     }, []);
 
