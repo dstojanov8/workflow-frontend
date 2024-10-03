@@ -11,8 +11,7 @@ export const StyledForm = styled.form`
   width: 25vw;
   display: grid;
   background-color: #f4f4f4;
-  padding: 20px;
-  padding-top: 15px;
+  padding: 15px 50px 20px 50px;
   border-radius: 5px;
 `
 
@@ -30,7 +29,7 @@ export const StyledLabel = styled.label<FormStyleProps>`
 `
 
 export const StyledInput = styled.input`
-  width: 20vw;
+  width: -webkit-fill-available;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
