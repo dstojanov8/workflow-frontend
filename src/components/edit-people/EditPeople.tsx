@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 
 import {
@@ -7,11 +7,11 @@ import {
     StyledInput,
     StyledButton,
     StyledLabel,
-  } from "./AddPeople.styled";
+  } from "./EditPeople.styled";
 import Dropdown from "../dropdown/Dropdown";
 
   
-const AddPeople = () => {
+const EditPeople = () => {
 
   const [firstname, setFirstname] = React.useState("");
   const [lastname, setLastname] = React.useState("");
@@ -19,13 +19,15 @@ const AddPeople = () => {
   const [parentOne, setParentOne] = React.useState(0);
   const [parentTwo, setParentTwo] = React.useState(0);
   const [ peopeList, setPeopleList ] = useState([])
+  // const [ personData, setPersonData] = useState({});
 
   const navigate = useNavigate();
   const token = localStorage.getItem('userToken');
+  const { id } = useParams();
 
   useEffect(() => {
     const token = localStorage.getItem('userToken');
-    const fetchData = async () => {
+    const fetchPeopleData = async () => {
         try {
             const config = {
                 headers: {
@@ -34,22 +36,45 @@ const AddPeople = () => {
                 withCredentials: true, // include cookies in the request
             }
             const response = await axios.get('http://127.0.0.1:8000/person', config);
-
+            
             setPeopleList(response.data);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
 
-    fetchData();
+    const fetchPersonData = async () => {
+        try {
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+                withCredentials: true, // include cookies in the request
+            }
+            const response = await axios.get(`http://127.0.0.1:8000/person/${id}`, config);
+
+            console.log(response.data);
+            setFirstname(response.data[0].firstname);
+            setLastname(response.data[0].lastname);
+            setParentOne(response.data[0].firstparent_id || 0);
+            setParentTwo(response.data[0].secondparent_id || 0);
+            // setPersonData(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    fetchPersonData();
+    fetchPeopleData();
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-        const response = await axios.post(
-            'http://127.0.0.1:8000/person', 
+        const response = await axios.put(
+            `http://127.0.0.1:8000/person/${id}`, 
             {
                 firstname: firstname,
                 lastname: lastname,
@@ -65,8 +90,8 @@ const AddPeople = () => {
             }
         );
 
-        if (response.status === 201) {
-            console.log("User added!", response.data);
+        if (response.status === 200) {
+            console.log("User updated!", response.data);
             navigate('/my-users');
         }
     } catch (error) {
@@ -83,31 +108,6 @@ const AddPeople = () => {
       }
     }
 };
-
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   const response = await fetch('http://127.0.0.1:8000/person', {
-  //       method: "POST",
-  //       credentials: 'include',
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //           firstname: firstname,
-  //           lastname: lastname,
-  //           firstparent_id: null,
-  //           secondparent_id: null
-  //         }),
-  //       });
-        
-  //       if (response.ok) {
-  //         console.log("User added!", response.text());
-  //         navigate('/my-users');
-  //       } else {
-  //         console.error('error');
-  //       }
-  // };
 
   const firstnameEntered = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirstname(e.target.value);
@@ -144,10 +144,10 @@ const AddPeople = () => {
         setSelectedOption={setParentTwo}
       />
       <StyledButton type="submit" disabled={!firstname || !lastname}>
-        Add User
+        Update User
       </StyledButton>
     </StyledForm>
     )
 }
 
-export default AddPeople;
+export default EditPeople;

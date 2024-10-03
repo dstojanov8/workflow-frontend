@@ -7,6 +7,7 @@ import AddPeople from "./components/add-people/AddPeople";
 import ProtectedRoute from "./components/protected-route/ProtectedRoute";
 import NotFoundRedirect from "./components/not-found-redirect/NotFoundRedirect";
 import RegisterForm from "./components/register-form/RegisterForm";
+import EditPeople from "./components/edit-people/EditPeople";
 
 const routes: RouteObject[] = [
   {
@@ -23,6 +24,10 @@ const routes: RouteObject[] = [
           {
             path: 'my-users',
             element: <PeopleTable />,
+          },
+          {
+            path: 'my-users/:id',
+            element: <EditPeople /> // New User Details route
           },
           {
             path: 'add-user',

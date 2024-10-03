@@ -30,3 +30,20 @@ export const StyledTr = styled.tr`
     background-color: #f9f9f9;
   }
 `;
+
+export const StyledButton = styled.button`
+  width: 100%;
+  background-color: #cb2424;
+  color: white;
+  padding: 3px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:disabled {
+    opacity: 0.5;
+  }
+  &:enabled {
+    opacity: 1.0;
+  }
+  opacity: 1;
+`;
