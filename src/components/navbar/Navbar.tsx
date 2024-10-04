@@ -38,7 +38,7 @@ const Navbar = () => {
     },
     {
       name: "Tree",
-      route: ""
+      route: "/tree"
     }
   ];
 
