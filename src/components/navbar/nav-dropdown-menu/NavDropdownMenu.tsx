@@ -14,7 +14,7 @@ const NavDropdownMenu = ({routes}: NavDropdownMenuProps) => {
     <MenuContainer className="dropdown-menu">
       <StuledUl>
         {routes.map((element) => 
-          <StyledLi><MenuLink 
+          <StyledLi key={element.name}><MenuLink 
             to={element.route} 
             onClick={element.onClick ?? undefined}
           >{element.name}</MenuLink></StyledLi>

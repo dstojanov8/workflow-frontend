@@ -14,4 +14,10 @@ export const StyledContainer = styled.div`
   background-color: #f4f4f4;
   padding: 15px 50px 20px 20px;
   border-radius: 5px;
-`
+`;
+
+export const DetailsWrapper = styled.div`
+  display: flex;
+  flex-direction:column;
+  width: -webkit-fill-available; 
+`;

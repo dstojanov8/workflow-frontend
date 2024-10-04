@@ -1,5 +1,5 @@
 import { PersonInfo } from "../../people-table/PeopleTable";
-import { PersonItem, SideMenu } from "./PeopleList.styled";
+import { PersonItem, SideMenu, Title } from "./PeopleList.styled";
 
 interface PeopleListProps {
   people: PersonInfo[];
@@ -10,7 +10,7 @@ const PeopleList = ({ people, onSelectPerson }: PeopleListProps) => {
 
   return (
     <SideMenu>
-      <h3>People List</h3>
+      <Title>People List</Title>
       {people.map((person: PersonInfo) => (
         <PersonItem key={person.id} onClick={() => onSelectPerson(person)}>
           {person.firstname} {person.lastname}

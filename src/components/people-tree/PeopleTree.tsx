@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PeopleList from "./people-list/PeopleList";
-import { StyledContainer } from "./PeopleTree.styled";
+import { DetailsWrapper, StyledContainer } from "./PeopleTree.styled";
 import axios from "axios";
 import { PersonInfo } from "../people-table/PeopleTable";
 import PersonDetails from "./person-details/PersonDetails";
@@ -34,8 +34,12 @@ const PeopleTree = () => {
     return (
         <StyledContainer>
             <PeopleList people={people} onSelectPerson={setSelectedPerson} />
-            {selectedPerson && <PersonDetails person={selectedPerson} />}
-            {/* <WorkFlow /> */}
+            {selectedPerson && 
+                <DetailsWrapper>
+                    <PersonDetails person={selectedPerson} />
+                    {/* <WorkFlow /> */}
+                </DetailsWrapper>
+            }
         </StyledContainer>
     )
 }
