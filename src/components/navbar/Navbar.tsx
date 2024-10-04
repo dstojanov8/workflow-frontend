@@ -5,6 +5,7 @@ import { NavbarContainer, Logo, NavLinks, NavLink } from './Navbar.styled';
 import { logoutUser } from '../../store/account/accountSlice';
 import { persistor } from '../../store/store';
 import { useAppSelector } from '../../store/hooks';
+import NavDropdown from './nav-dropdown/NavDropdown';
 
 const Navbar = () => {
 
@@ -30,17 +31,43 @@ const Navbar = () => {
     navigate('/login');
   };
 
+  const myUserRoutes = [
+    {
+      name: "Table",
+      route: "/my-users"
+    },
+    {
+      name: "Tree",
+      route: ""
+    }
+  ];
+
+  const myAccountRoutes = [
+    {
+      name: "Account",
+      route: ""
+    },
+    {
+      name: "Logout",
+      route: "#",
+      onClick: handleLogout
+    }
+  ];
+
   return (
     <NavbarContainer>
-      <Logo>MyApp</Logo>
+      <Logo>WorkFlow</Logo>
       <NavLinks>
         {accountInfo ? 
           (
             <>
               <NavLink to="/">Home</NavLink>
-              <NavLink to="/my-users">My Users</NavLink>
+
+              <NavDropdown placeholderName='My Users' routes={myUserRoutes} />
+              
               <NavLink to="/add-user">Add User</NavLink>
-              <NavLink to="#" onClick={handleLogout} >Logout</NavLink>
+
+              <NavDropdown placeholderName='Account' routes={myAccountRoutes} />
             </>
           ) : (
             <>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 
-import { StyledTable, StyledTh, StyledTd, StyledTr, StyledButton} from './PeopleTable.styled';
+import { StyledTable, StyledTh, StyledTd, StyledTr, StyledButton, StyledTableContainer} from './PeopleTable.styled';
 import { useNavigate } from "react-router-dom";
 
 
@@ -99,34 +99,36 @@ const PeopleTable = () => {
     }
 
     return (
+      <StyledTableContainer>
         <StyledTable>
-        <thead>
-          <tr>
-            <StyledTh>ID</StyledTh>
-            <StyledTh>Firstname</StyledTh>
-            <StyledTh>Lastname</StyledTh>
-            <StyledTh>First Parent</StyledTh>
-            <StyledTh>Second Parent</StyledTh>
-            <StyledTh></StyledTh>
-          </tr>
-        </thead>
-        <tbody>
-            {peopeList.map((person: PersonInfoFullNames) => 
-                <StyledTr onClick={() => handleTableRowClick(person.id)} key={person.id}>
-                    <StyledTd>{person.id}</StyledTd>
-                    <StyledTd>{person.firstname}</StyledTd>
-                    <StyledTd>{person.lastname}</StyledTd>
-                    <StyledTd>{person.firstParentFullName || 'Not stated'}</StyledTd>
-                    <StyledTd>{person.secondtParentFullName || 'Not stated'}</StyledTd>
-                    <StyledTd>
-                      <StyledButton type="submit" onClick={(e) => deleteHandler(e, person.id)}>
-                        Delete
-                      </StyledButton>
-                    </StyledTd>
-                </StyledTr>)
-            }
-        </tbody>
-      </StyledTable>
+          <thead>
+            <tr>
+              <StyledTh>ID</StyledTh>
+              <StyledTh>Firstname</StyledTh>
+              <StyledTh>Lastname</StyledTh>
+              <StyledTh>First Parent</StyledTh>
+              <StyledTh>Second Parent</StyledTh>
+              <StyledTh></StyledTh>
+            </tr>
+          </thead>
+          <tbody>
+              {peopeList.map((person: PersonInfoFullNames) => 
+                  <StyledTr onClick={() => handleTableRowClick(person.id)} key={person.id}>
+                      <StyledTd>{person.id}</StyledTd>
+                      <StyledTd>{person.firstname}</StyledTd>
+                      <StyledTd>{person.lastname}</StyledTd>
+                      <StyledTd>{person.firstParentFullName || 'Not stated'}</StyledTd>
+                      <StyledTd>{person.secondtParentFullName || 'Not stated'}</StyledTd>
+                      <StyledTd>
+                        <StyledButton type="submit" onClick={(e) => deleteHandler(e, person.id)}>
+                          Delete
+                        </StyledButton>
+                      </StyledTd>
+                  </StyledTr>)
+              }
+          </tbody>
+        </StyledTable>
+      </StyledTableContainer>
     );
 
 }

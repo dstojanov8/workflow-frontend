@@ -1,5 +1,21 @@
 import styled from 'styled-components';
 
+export const StyledTableContainer = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  place-items: center;
+  width: 80vw;
+  height: 80vh;
+  display: grid;
+  background-color: #f4f4f4;
+  padding: 15px 50px 20px 50px;
+  border-radius: 5px;
+`
+
 export const StyledTable = styled.table`
   position: absolute;
   left: 50%;
