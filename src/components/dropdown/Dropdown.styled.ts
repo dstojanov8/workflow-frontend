@@ -17,7 +17,7 @@ export const StyledSelect = styled.select`
 
   &:focus {
     outline: none;
-    border-color: #007BFF;
+    border-color: #007bff;
   }
 `;
 

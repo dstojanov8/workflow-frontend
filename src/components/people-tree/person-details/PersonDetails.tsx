@@ -12,10 +12,12 @@ const PersonDetails = ({ person }: PersonDetailsProps) => {
       <DetailItem>ID: {person.id}</DetailItem>
       <DetailItem>First Name: {person.firstname}</DetailItem>
       <DetailItem>Last Name: {person.lastname}</DetailItem>
-      <DetailItem>First Parent ID: {person.firstparent_id ?? 'N/A'}</DetailItem>
-      <DetailItem>Second Parent ID: {person.secondparent_id ?? 'N/A'}</DetailItem>
+      <DetailItem>First Parent ID: {person.firstparent_id ?? "N/A"}</DetailItem>
+      <DetailItem>
+        Second Parent ID: {person.secondparent_id ?? "N/A"}
+      </DetailItem>
     </DetailsContainer>
   );
-}
+};
 
 export default PersonDetails;

@@ -23,5 +23,4 @@ export const PersonItem = styled.p`
 export const Title = styled.h3`
   margin: unset;
   // position: fixed;
-
 `;

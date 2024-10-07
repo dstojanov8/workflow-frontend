@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import styled from '@emotion/styled';
-import { columnsFromBackend } from './MockData';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import TaskCard from './TaskCard';
+import React, { useState } from "react";
+import styled from "@emotion/styled";
+import { columnsFromBackend } from "./MockData";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import TaskCard from "./TaskCard";
 
 const Container = styled.div`
   display: flex;

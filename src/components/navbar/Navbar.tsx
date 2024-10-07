@@ -1,15 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import { NavbarContainer, Logo, NavLinks, NavLink } from './Navbar.styled';
-import { logoutUser } from '../../store/account/accountSlice';
-import { persistor } from '../../store/store';
-import { useAppSelector } from '../../store/hooks';
-import NavDropdown from './nav-dropdown/NavDropdown';
+import { NavbarContainer, Logo, NavLinks, NavLink } from "./Navbar.styled";
+import { logoutUser } from "../../store/account/accountSlice";
+import { persistor } from "../../store/store";
+import { useAppSelector } from "../../store/hooks";
+import NavDropdown from "./nav-dropdown/NavDropdown";
 
 const Navbar = () => {
-
-  const accountInfo  = useAppSelector((state) => state.account.accountInfo);
+  const accountInfo = useAppSelector((state) => state.account.accountInfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,61 +20,59 @@ const Navbar = () => {
     // Reason: missing persist:persist_account key in localstorage
     //
     // persistor.purge(); completely removes this key and it is not
-    // generated on login so on refresh app checks if there is an id in 
+    // generated on login so on refresh app checks if there is an id in
     // redux localstorage. Since there is no pesist key (redux state wont persist)
     // and it is as no one is logged in so the app redirects to login.
     //
     // Some solutions include adding persist.flush() to login function
     dispatch(logoutUser());
     persistor.purge();
-    navigate('/login');
+    navigate("/login");
   };
 
   const myUserRoutes = [
     {
       name: "Table",
-      route: "/my-users"
+      route: "/my-users",
     },
     {
       name: "Tree",
-      route: "/tree"
-    }
+      route: "/tree",
+    },
   ];
 
   const myAccountRoutes = [
     {
       name: "Account",
-      route: ""
+      route: "",
     },
     {
       name: "Logout",
       route: "#",
-      onClick: handleLogout
-    }
+      onClick: handleLogout,
+    },
   ];
 
   return (
     <NavbarContainer>
       <Logo>WorkFlow</Logo>
       <NavLinks>
-        {accountInfo ? 
-          (
-            <>
-              <NavLink to="/">Home</NavLink>
+        {accountInfo ? (
+          <>
+            <NavLink to="/">Home</NavLink>
 
-              <NavDropdown placeholderName='My Users' routes={myUserRoutes} />
-              
-              <NavLink to="/add-user">Add User</NavLink>
+            <NavDropdown placeholderName="My Users" routes={myUserRoutes} />
 
-              <NavDropdown placeholderName='Account' routes={myAccountRoutes} />
-            </>
-          ) : (
-            <>
-              <NavLink to="/login">Login</NavLink>
-              <NavLink to="/register">Register</NavLink>
-            </>
-          )
-        }
+            <NavLink to="/add-user">Add User</NavLink>
+
+            <NavDropdown placeholderName="Account" routes={myAccountRoutes} />
+          </>
+        ) : (
+          <>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/register">Register</NavLink>
+          </>
+        )}
       </NavLinks>
     </NavbarContainer>
   );

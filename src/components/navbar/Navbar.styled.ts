@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const NavbarContainer = styled.nav`
   display: flex;
@@ -9,7 +9,7 @@ export const NavbarContainer = styled.nav`
   height: 3vh;
   padding: 1rem 2rem;
   color: white;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 `;
 
 export const Logo = styled.div`

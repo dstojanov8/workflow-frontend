@@ -7,7 +7,6 @@ interface PeopleListProps {
 }
 
 const PeopleList = ({ people, onSelectPerson }: PeopleListProps) => {
-
   return (
     <SideMenu>
       <Title>People List</Title>
@@ -18,6 +17,6 @@ const PeopleList = ({ people, onSelectPerson }: PeopleListProps) => {
       ))}
     </SideMenu>
   );
-}
+};
 
 export default PeopleList;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledTableContainer = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ export const StyledTableContainer = styled.div`
   background-color: #f4f4f4;
   padding: 20px 20px 20px 20px;
   border-radius: 5px;
-`
+`;
 
 export const StyledTable = styled.table`
   width: 70vw;
@@ -51,7 +51,7 @@ export const StyledButton = styled.button`
     opacity: 0.5;
   }
   &:enabled {
-    opacity: 1.0;
+    opacity: 1;
   }
   opacity: 1;
 `;

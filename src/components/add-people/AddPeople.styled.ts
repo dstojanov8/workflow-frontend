@@ -8,22 +8,22 @@ export const StyledForm = styled.form`
   padding: 15px 50px 20px 50px;
   border-radius: 5px;
   margin-top: 10vh;
-`
+`;
 
 export const StyledLabel = styled.label`
   display: block;
   margin-bottom: 10px;
   margin-top: 10px;
   font-weight: bold;
-  color: 'black';
-`
+  color: "black";
+`;
 
 export const StyledInput = styled.input`
   width: -webkit-fill-available;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-`
+`;
 
 export const StyledButton = styled.button`
   width: 10vw;
@@ -38,7 +38,7 @@ export const StyledButton = styled.button`
     opacity: 0.5;
   }
   &:enabled {
-    opacity: 1.0;
+    opacity: 1;
   }
   opacity: 1;
-`
+`;

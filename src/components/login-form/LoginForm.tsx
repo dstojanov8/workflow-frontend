@@ -12,8 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { loginUserAsync } from "../../store/account/accountThunk";
 
 function LoginForm() {
-
-  const accountId = useAppSelector((state) => state.account.accountInfo?.id); 
+  const accountId = useAppSelector((state) => state.account.accountInfo?.id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -22,7 +21,7 @@ function LoginForm() {
   const [passwordInvalid, setPasswordInvalid] = React.useState(false);
 
   useEffect(() => {
-    if (accountId) navigate('/');
+    if (accountId) navigate("/");
   }, [navigate, accountId]);
 
   // const login = async () => {
@@ -57,7 +56,7 @@ function LoginForm() {
       setPasswordInvalid(true);
     } else {
       setPasswordInvalid(false);
-      dispatch(loginUserAsync({ usernameOrEmail: username, password }))
+      dispatch(loginUserAsync({ usernameOrEmail: username, password }));
       // login();
     }
   };

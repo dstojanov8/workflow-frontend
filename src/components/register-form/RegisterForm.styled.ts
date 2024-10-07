@@ -7,11 +7,11 @@ export const StyledForm = styled.form`
   background-color: #f4f4f4;
   padding: 15px 50px 20px 50px;
   border-radius: 5px;
-`
+`;
 
 interface FormStyleProps {
-    $invalid?: boolean;
-    enabled?: boolean;
+  $invalid?: boolean;
+  enabled?: boolean;
 }
 
 export const StyledLabel = styled.label<FormStyleProps>`
@@ -19,15 +19,15 @@ export const StyledLabel = styled.label<FormStyleProps>`
   margin-bottom: 10px;
   margin-top: 10px;
   font-weight: bold;
-  color: ${props => props.$invalid ? 'red' : 'black'};
-`
+  color: ${(props) => (props.$invalid ? "red" : "black")};
+`;
 
 export const StyledInput = styled.input`
   width: -webkit-fill-available;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-`
+`;
 
 export const StyledButton = styled.button<FormStyleProps>`
   width: 10vw;
@@ -42,10 +42,10 @@ export const StyledButton = styled.button<FormStyleProps>`
     opacity: 0.5;
   }
   &:enabled {
-    opacity: 1.0;
+    opacity: 1;
   }
-  opacity: ${props => !props.enabled ? 0.5 : 1};
-`
+  opacity: ${(props) => (!props.enabled ? 0.5 : 1)};
+`;
 
 export const StyledAlert = styled.div`
   padding: 10px;
@@ -53,4 +53,4 @@ export const StyledAlert = styled.div`
   margin-top: 10px;
   border-radius: 5px;
   font-size: 13px;
-`
+`;

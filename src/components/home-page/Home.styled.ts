@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 export const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
