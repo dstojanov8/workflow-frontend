@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyledForm, StyledInput, StyledButton, StyledAlert, StyledLabel } from './RegisterForm.styled';
+import { registerUserAsync } from '../../store/account/accountThunk';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useNavigate } from 'react-router-dom';
+
 
 function RegisterForm() {
     const [username, setUsername] = React.useState('');
@@ -10,35 +14,48 @@ function RegisterForm() {
     const [rePassword, setRePassword] = React.useState('');
     const [passwordInvalid, setPasswordInvalid] = React.useState(false);
 
+    const dispatch = useAppDispatch();
+    const {success} = useAppSelector((state) => state.account);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (success) navigate('/login');
+    }, [navigate, success]);
+
+    // const register = async () => {
+    //     const response = await fetch("http://127.0.0.1:8000/user/register", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             email,
+    //             username,
+    //             password,
+    //             firstname,
+    //             lastname,
+    //         }),
+    //         credentials: 'include', // include cookies in the request
+    //     });
+    //     const data = await response.json();
+    //     if (data.success) {
+    //         console.log('Registration successful');
+    //     } else {
+    //         console.error(data.error);
+    //     }
+    // }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Hello');
 
         // validate password and set passwordInvalid state accordingly
         if (password.length < 8 || password !== rePassword) {
             setPasswordInvalid(true);
         } else {
             setPasswordInvalid(false);
-
-            const response = await fetch('http://127.0.0.1:8000/user?action=register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email,
-                    username,
-                    password,
-                    firstname,
-                    lastname,
-                }),
-            });
-            const data = await response.json();
-            if (data.success) {
-                console.log('Registration successful');
-            } else {
-                console.error(data.error);
-            }
+            dispatch(registerUserAsync({ email, username, password, firstname, lastname }));
+            // register();
         }
     }
 
@@ -81,9 +98,9 @@ function RegisterForm() {
             <StyledInput type="text" value={lastname} onChange={e => lastnameEntered(e)}/>
 
 
-            <StyledLabel invalid={passwordInvalid}>Password:</StyledLabel>
+            <StyledLabel $invalid={passwordInvalid}>Password:</StyledLabel>
             <StyledInput type="password" value={password} onChange={(e) => passwordEntered(e)} />
-            <StyledLabel invalid={passwordInvalid}>Repeat Password:</StyledLabel>
+            <StyledLabel $invalid={passwordInvalid}>Repeat Password:</StyledLabel>
             <StyledInput type="password" value={rePassword} onChange={(e) => rePasswordEntered(e)} />
             {passwordInvalid && <StyledAlert>Password is invalid or passwords don't match.</StyledAlert>}
             <StyledButton type="submit" disabled={!username || !password || !rePassword}>Register</StyledButton>
