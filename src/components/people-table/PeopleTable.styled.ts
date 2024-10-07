@@ -1,29 +1,21 @@
 import styled from 'styled-components';
 
 export const StyledTableContainer = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 55%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-
+  display: flex;
   place-items: center;
-  width: 80vw;
+  align-items: center;
+  justify-content: center;
+  width: 90vw;
   height: 80vh;
-  display: grid;
+  display: flex;
   background-color: #f4f4f4;
-  padding: 15px 50px 20px 50px;
+  padding: 20px 20px 20px 20px;
   border-radius: 5px;
 `
 
 export const StyledTable = styled.table`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-
-  width: 60vw;
+  width: 70vw;
+  height: 50vh
   border-collapse: collapse;
   margin: 20px 0;
   font-size: 18px;

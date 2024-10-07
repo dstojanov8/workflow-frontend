@@ -6,6 +6,7 @@ export const NavbarContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
   background-color: #333;
+  height: 3vh;
   padding: 1rem 2rem;
   color: white;
   font-family: 'Arial', sans-serif;

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import PeopleList from "./people-list/PeopleList";
-import { DetailsWrapper, StyledContainer } from "./PeopleTree.styled";
+import { StyledContainer } from "./PeopleTree.styled";
 import axios from "axios";
 import { PersonInfo } from "../people-table/PeopleTable";
-import PersonDetails from "./person-details/PersonDetails";
+import Kanban from "./work-flow/Kanban";
 
 const PeopleTree = () => {
 
@@ -35,10 +35,7 @@ const PeopleTree = () => {
         <StyledContainer>
             <PeopleList people={people} onSelectPerson={setSelectedPerson} />
             {selectedPerson && 
-                <DetailsWrapper>
-                    <PersonDetails person={selectedPerson} />
-                    {/* <WorkFlow /> */}
-                </DetailsWrapper>
+                <Kanban />
             }
         </StyledContainer>
     )

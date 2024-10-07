@@ -1,12 +1,6 @@
 import styled from "styled-components";
 
 export const StyledForm = styled.form`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-
   place-items: center;
   width: 25vw;
   display: grid;

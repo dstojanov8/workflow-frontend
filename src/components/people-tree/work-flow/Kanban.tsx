@@ -6,23 +6,28 @@ import TaskCard from './TaskCard';
 
 const Container = styled.div`
   display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 const TaskList = styled.div`
   min-height: 100px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   background: #f3f3f3;
-  min-width: 341px;
+  min-width: 10vw;
   border-radius: 5px;
   padding: 15px 15px;
   margin-right: 45px;
+  overflow: auto;
 `;
 
 const TaskColumnStyles = styled.div`
   margin: 8px;
   display: flex;
-  width: 100%;
+  width: -webkit-fill-available;
   min-height: 80vh;
 `;
 
@@ -88,7 +93,7 @@ const Kanban = () => {
                   >
                     <Title>{column.title}</Title>
                     {column.items.map((item, index) => (
-                      <TaskCard key={item} item={item} index={index} />
+                      <TaskCard key={item.id} item={item} index={index} />
                     ))}
                     {provided.placeholder}
                   </TaskList>

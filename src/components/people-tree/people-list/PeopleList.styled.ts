@@ -3,7 +3,6 @@ import styled from "styled-components";
 // Styled container for the side menu
 export const SideMenu = styled.div`
   width: 25vh;
-  height: -webkit-fill-available;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
