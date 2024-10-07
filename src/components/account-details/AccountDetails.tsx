@@ -28,10 +28,22 @@ const AccountDetails = () => {
   return (
     <DetailsContainer>
       <Title>Account Details</Title>
-      <DetailItem>First Name: {account?.firstname}</DetailItem>
-      <DetailItem>Last Name: {account?.lastname}</DetailItem>
-      <DetailItem>Username: {account?.username}</DetailItem>
-      <DetailItem>Password: {account?.email}</DetailItem>
+      <DetailItem>
+        <b>First Name: </b>
+        {account?.firstname}
+      </DetailItem>
+      <DetailItem>
+        <b>Last Name: </b>
+        {account?.lastname}
+      </DetailItem>
+      <DetailItem>
+        <b>Username: </b>
+        {account?.username}
+      </DetailItem>
+      <DetailItem>
+        <b>Password: </b>
+        {account?.email}
+      </DetailItem>
 
       {/* <form onSubmit={handleSubmit(onSubmit)}>
         <input {...register("firstName")} />
