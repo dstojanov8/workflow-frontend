@@ -9,6 +9,7 @@ import NotFoundRedirect from "./components/not-found-redirect/NotFoundRedirect";
 import RegisterForm from "./components/register-form/RegisterForm";
 import EditPeople from "./components/edit-people/EditPeople";
 import PeopleTree from "./components/people-tree/PeopleTree";
+import AccountDetails from "./components/account-details/AccountDetails";
 
 const routes: RouteObject[] = [
   {
@@ -31,12 +32,16 @@ const routes: RouteObject[] = [
             element: <EditPeople />, // New User Details route
           },
           {
-            path: "tree",
+            path: "workflow",
             element: <PeopleTree />,
           },
           {
             path: "add-user",
             element: <AddPeople />,
+          },
+          {
+            path: "account-details",
+            element: <AccountDetails />,
           },
           // {
           //   path: 'user/:id',

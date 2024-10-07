@@ -36,15 +36,15 @@ const Navbar = () => {
       route: "/my-users",
     },
     {
-      name: "Tree",
-      route: "/tree",
+      name: "WorkFlow",
+      route: "/workflow",
     },
   ];
 
   const myAccountRoutes = [
     {
       name: "Account",
-      route: "",
+      route: "/account-details",
     },
     {
       name: "Logout",

@@ -5,7 +5,9 @@ import { RootState } from "../../store/store";
 
 const NotFoundRedirect = () => {
   const navigate = useNavigate();
-  const userId = useSelector((state: RootState) => state.account.id);
+  const userId = useSelector(
+    (state: RootState) => state.account.accountInfo?.id
+  );
 
   useEffect(() => {
     if (userId) {
