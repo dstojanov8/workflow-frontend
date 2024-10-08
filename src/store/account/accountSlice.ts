@@ -1,7 +1,11 @@
 import { /*createAsyncThunk,*/ createSlice } from "@reduxjs/toolkit";
-import { loginUserAsync, registerUserAsync } from "./accountThunk";
+import {
+  loginUserAsync,
+  registerUserAsync,
+  updateUserAsync,
+} from "./accountThunk";
 
-interface AccountInfo {
+export interface AccountInfo {
   id: number;
   email: string;
   username: string;
@@ -53,6 +57,18 @@ const accountSlice = createSlice({
         state.userToken = payload.userToken;
       })
       .addCase(loginUserAsync.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(updateUserAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserAsync.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.accountInfo = payload.user;
+      })
+      .addCase(updateUserAsync.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       })

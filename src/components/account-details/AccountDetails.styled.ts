@@ -22,3 +22,8 @@ export const DetailItem = styled.p`
   font-size: 16px;
   margin: 10px 0;
 `;
+
+export const StyledButton = styled.button`
+  margin-top: 3vh;
+  border: none;
+`;

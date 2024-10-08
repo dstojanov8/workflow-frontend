@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AccountInfo } from "./accountSlice";
 
 const backendURL = "http://127.0.0.1:8000";
 
@@ -15,6 +16,8 @@ interface LoginInfo {
   usernameOrEmail: string;
   password: string;
 }
+
+const token = localStorage.getItem("userToken");
 
 export const registerUserAsync = createAsyncThunk(
   "account/registerUserAsync",
@@ -61,6 +64,38 @@ export const loginUserAsync = createAsyncThunk(
         config
       );
       localStorage.setItem("userToken", data.userToken);
+      return data;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      // return custom error message from API if any
+      if (axiosError.response && axiosError.response.data) {
+        return rejectWithValue(axiosError.response.data);
+      } else {
+        return rejectWithValue(axiosError.message);
+      }
+    }
+  }
+);
+
+export const updateUserAsync = createAsyncThunk(
+  "account/update",
+  async (
+    { id, firstname, lastname, username, email }: AccountInfo,
+    { rejectWithValue }
+  ) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Replace with your actual token
+        },
+        withCredentials: true,
+      };
+      const { data } = await axios.put(
+        `${backendURL}/user/${id}`,
+        { firstname, lastname, username, email },
+        config
+      );
       return data;
     } catch (error) {
       const axiosError = error as AxiosError;
