@@ -96,11 +96,14 @@ export const updateUserAsync = createAsyncThunk(
         { firstname, lastname, username, email },
         config
       );
+      console.log(data);
       return data;
     } catch (error) {
       const axiosError = error as AxiosError;
+      console.log("axiosError", axiosError);
       // return custom error message from API if any
       if (axiosError.response && axiosError.response.data) {
+        alert(axiosError.response.data.message);
         return rejectWithValue(axiosError.response.data);
       } else {
         return rejectWithValue(axiosError.message);
