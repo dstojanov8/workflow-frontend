@@ -10,6 +10,7 @@ import {
   StyledTableContainer,
 } from "./PeopleTable.styled";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export interface PersonInfo {
   id: number;
@@ -69,7 +70,17 @@ const PeopleTable = () => {
 
         setPeopleList(peopleListWithFullNames);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.data) {
+          const errorData = axiosError.response.data as { message: string };
+          toast.error(errorData.message || "An error occurred", {
+            position: "top-center",
+          });
+        } else {
+          toast.error(axiosError.message || "An error occurred", {
+            position: "top-center",
+          });
+        }
       }
     };
 
@@ -99,22 +110,24 @@ const PeopleTable = () => {
       );
 
       if (response.status === 200) {
-        console.log("User deleted!", response.data);
+        toast.success("User deleted", {
+          position: "top-center",
+        });
         setPeopleList((prevList) =>
           prevList.filter((item: PersonInfoFullNames) => item.id !== personId)
         );
       }
     } catch (error) {
-      const axiosError = error as AxiosError; // Type assertion for the error
-      if (axiosError.response) {
-        // The request was made and the server responded with a status code
-        console.error("Error:", axiosError.response.data);
-      } else if (axiosError.request) {
-        // The request was made but no response was received
-        console.error("Error:", axiosError.request);
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.response.data) {
+        const errorData = axiosError.response.data as { message: string };
+        toast.error(errorData.message || "An error occurred", {
+          position: "top-center",
+        });
       } else {
-        // Something happened in setting up the request that triggered an error
-        console.error("Error:", axiosError.message);
+        toast.error(axiosError.message || "An error occurred", {
+          position: "top-center",
+        });
       }
     }
   };

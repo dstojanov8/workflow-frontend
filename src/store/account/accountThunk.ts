@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AccountInfo } from "./accountSlice";
@@ -36,11 +37,19 @@ export const registerUserAsync = createAsyncThunk(
         { email, username, password, firstname, lastname },
         config
       );
+      toast.success("Registration successful", {
+        position: "top-center",
+      });
     } catch (error) {
       const axiosError = error as AxiosError;
-      // return custom error message from backend if present
+      console.log("axiosError", axiosError);
+      // return custom error message from API if any
       if (axiosError.response && axiosError.response.data) {
-        return rejectWithValue(axiosError.response.data);
+        const errorData = axiosError.response.data as { message: string };
+        toast.error(errorData.message || "An error occurred", {
+          position: "top-center",
+        });
+        return rejectWithValue(errorData.message);
       } else {
         return rejectWithValue(axiosError.message);
       }
@@ -64,12 +73,20 @@ export const loginUserAsync = createAsyncThunk(
         config
       );
       localStorage.setItem("userToken", data.userToken);
+      toast.success("Login successful", {
+        position: "top-center",
+      });
       return data;
     } catch (error) {
       const axiosError = error as AxiosError;
+      console.log("axiosError", axiosError);
       // return custom error message from API if any
       if (axiosError.response && axiosError.response.data) {
-        return rejectWithValue(axiosError.response.data);
+        const errorData = axiosError.response.data as { message: string };
+        toast.error(errorData.message || "An error occurred", {
+          position: "top-center",
+        });
+        return rejectWithValue(errorData.message);
       } else {
         return rejectWithValue(axiosError.message);
       }
@@ -97,14 +114,20 @@ export const updateUserAsync = createAsyncThunk(
         config
       );
       console.log(data);
+      toast.success("User updated", {
+        position: "top-center",
+      });
       return data;
     } catch (error) {
       const axiosError = error as AxiosError;
       console.log("axiosError", axiosError);
       // return custom error message from API if any
       if (axiosError.response && axiosError.response.data) {
-        alert(axiosError.response.data.message);
-        return rejectWithValue(axiosError.response.data);
+        const errorData = axiosError.response.data as { message: string };
+        toast.error(errorData.message || "An error occurred", {
+          position: "top-center",
+        });
+        return rejectWithValue(errorData.message);
       } else {
         return rejectWithValue(axiosError.message);
       }

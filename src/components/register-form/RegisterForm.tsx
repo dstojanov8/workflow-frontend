@@ -18,6 +18,7 @@ function RegisterForm() {
   const [password, setPassword] = React.useState("");
   const [rePassword, setRePassword] = React.useState("");
   const [passwordInvalid, setPasswordInvalid] = React.useState(false);
+  const [shouldRedirect, setShouldRedirect] = React.useState(false);
 
   const dispatch = useAppDispatch();
   const { success } = useAppSelector((state) => state.account);
@@ -25,8 +26,11 @@ function RegisterForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (success) navigate("/login");
-  }, [navigate, success]);
+    if (success && shouldRedirect) {
+      navigate("/login");
+      setShouldRedirect(false);
+    }
+  }, [navigate, shouldRedirect, success]);
 
   // const register = async () => {
   //     const response = await fetch("http://127.0.0.1:8000/user/register", {
@@ -62,6 +66,7 @@ function RegisterForm() {
       dispatch(
         registerUserAsync({ email, username, password, firstname, lastname })
       );
+      setShouldRedirect(true);
       // register();
     }
   };

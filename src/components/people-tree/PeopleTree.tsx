@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import PeopleList from "./people-list/PeopleList";
 import { StyledContainer } from "./PeopleTree.styled";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { PersonInfo } from "../people-table/PeopleTable";
 import Kanban from "./work-flow/Kanban";
+import { toast } from "react-toastify";
 
 const PeopleTree = () => {
   const [people, setPeople] = useState([]);
@@ -26,7 +27,17 @@ const PeopleTree = () => {
 
         setPeople(response.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.data) {
+          const errorData = axiosError.response.data as { message: string };
+          toast.error(errorData.message || "An error occurred", {
+            position: "top-center",
+          });
+        } else {
+          toast.error(axiosError.message || "An error occurred", {
+            position: "top-center",
+          });
+        }
       }
     };
 

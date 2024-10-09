@@ -9,6 +9,7 @@ import {
   StyledLabel,
 } from "./AddPeople.styled";
 import Dropdown from "../dropdown/Dropdown";
+import { toast } from "react-toastify";
 
 const AddPeople = () => {
   const [firstname, setFirstname] = React.useState("");
@@ -38,7 +39,17 @@ const AddPeople = () => {
 
         setPeopleList(response.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.data) {
+          const errorData = axiosError.response.data as { message: string };
+          toast.error(errorData.message || "An error occurred", {
+            position: "top-center",
+          });
+        } else {
+          toast.error(axiosError.message || "An error occurred", {
+            position: "top-center",
+          });
+        }
       }
     };
 
@@ -66,20 +77,22 @@ const AddPeople = () => {
       );
 
       if (response.status === 201) {
-        console.log("User added!", response.data);
+        toast.success("User added", {
+          position: "top-center",
+        });
         navigate("/my-users");
       }
     } catch (error) {
-      const axiosError = error as AxiosError; // Type assertion for the error
-      if (axiosError.response) {
-        // The request was made and the server responded with a status code
-        console.error("Error:", axiosError.response.data);
-      } else if (axiosError.request) {
-        // The request was made but no response was received
-        console.error("Error:", axiosError.request);
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.response.data) {
+        const errorData = axiosError.response.data as { message: string };
+        toast.error(errorData.message || "An error occurred", {
+          position: "top-center",
+        });
       } else {
-        // Something happened in setting up the request that triggered an error
-        console.error("Error:", axiosError.message);
+        toast.error(axiosError.message || "An error occurred", {
+          position: "top-center",
+        });
       }
     }
   };
