@@ -11,10 +11,9 @@ import {
   StyledLabel,
   StyledSubmitButton,
 } from "./EditAccountDetails.styled";
-import { AccountInfo } from "../../../store/account/accountSlice";
-// import axios, { AxiosError } from "axios";
 import { useAppDispatch } from "../../../store/hooks";
 import { updateUserAsync } from "../../../store/account/accountThunk";
+import { AccountInfo } from "../../../types";
 
 const validationSchema = Yup.object().shape({
   firstname: Yup.string().required("First Name is required"),

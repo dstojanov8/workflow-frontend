@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import {
   StyledTable,
@@ -9,21 +11,7 @@ import {
   StyledButton,
   StyledTableContainer,
 } from "./PeopleTable.styled";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-
-export interface PersonInfo {
-  id: number;
-  firstname: string;
-  lastname: string;
-  firstparent_id: number | null;
-  secondparent_id: number | null;
-}
-
-interface PersonInfoFullNames extends PersonInfo {
-  firstParentFullName: string | null;
-  secondtParentFullName: string | null;
-}
+import { PersonInfo, PersonInfoFullNames } from "../../types";
 
 const PeopleTable = () => {
   const [peopeList, setPeopleList] = useState([]);

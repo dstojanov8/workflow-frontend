@@ -1,4 +1,4 @@
-import { PersonInfo } from "../people-table/PeopleTable";
+import { PersonInfo } from "../../types";
 import { DropdownWrapper, StyledOption, StyledSelect } from "./Dropdown.styled";
 
 interface DropdownProps {

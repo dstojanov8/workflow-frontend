@@ -1,22 +1,10 @@
 import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AccountInfo } from "./accountSlice";
+
+import { AccountInfo, LoginInfo, RegistrationInfo } from "../../types";
 
 const backendURL = "http://127.0.0.1:8000";
-
-interface RegistrationInfo {
-  email: string;
-  username: string;
-  password: string;
-  firstname: string;
-  lastname: string;
-}
-
-interface LoginInfo {
-  usernameOrEmail: string;
-  password: string;
-}
 
 const token = localStorage.getItem("userToken");
 

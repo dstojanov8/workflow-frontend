@@ -1,4 +1,4 @@
-import { PersonInfo } from "../../people-table/PeopleTable";
+import { PersonInfo } from "../../../types";
 import { PersonItem, SideMenu, Title } from "./PeopleList.styled";
 
 interface PeopleListProps {

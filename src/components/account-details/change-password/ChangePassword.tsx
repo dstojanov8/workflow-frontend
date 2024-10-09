@@ -17,7 +17,7 @@ const validationSchema = Yup.object().shape({
   newPassword2: Yup.string().required("Field is required"),
 });
 
-interface EditAccountDetalsProps {
+interface ChangePasswordProps {
   setChangePassword: (arg: boolean) => void;
   setEditDetails: (arg: boolean) => void;
 }
@@ -25,7 +25,7 @@ interface EditAccountDetalsProps {
 const ChangePassord = ({
   setChangePassword,
   setEditDetails,
-}: EditAccountDetalsProps) => {
+}: ChangePasswordProps) => {
   const {
     register,
     handleSubmit,

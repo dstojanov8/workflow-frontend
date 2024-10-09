@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
 import PeopleList from "./people-list/PeopleList";
 import { StyledContainer } from "./PeopleTree.styled";
 import axios, { AxiosError } from "axios";
-import { PersonInfo } from "../people-table/PeopleTable";
 import Kanban from "./work-flow/Kanban";
-import { toast } from "react-toastify";
+import { PersonInfo } from "../../types";
 
 const PeopleTree = () => {
   const [people, setPeople] = useState([]);

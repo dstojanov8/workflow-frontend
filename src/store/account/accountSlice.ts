@@ -1,26 +1,11 @@
-import { /*createAsyncThunk,*/ createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+
 import {
   loginUserAsync,
   registerUserAsync,
   updateUserAsync,
 } from "./accountThunk";
-
-export interface AccountInfo {
-  id: number;
-  email: string;
-  username: string;
-  firstname: string;
-  lastname: string;
-}
-
-interface AccountState {
-  accountInfo: AccountInfo | null;
-  loading: boolean;
-  userToken: string | null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  error: any;
-  success: boolean;
-}
+import { AccountState } from "../../types";
 
 const userToken = localStorage.getItem("userToken")
   ? localStorage.getItem("userToken")
