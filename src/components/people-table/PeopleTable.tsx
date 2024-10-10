@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 import {
   StyledTable,
@@ -12,71 +10,43 @@ import {
   StyledTableContainer,
 } from "./PeopleTable.styled";
 import { PersonInfo, PersonInfoFullNames } from "../../types";
+import { deletePerson, getAllPeople } from "../../services/api";
 
 const PeopleTable = () => {
   const [peopeList, setPeopleList] = useState([]);
   const navigate = useNavigate();
-  const token = localStorage.getItem("userToken");
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    const fetchData = async () => {
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true, // include cookies in the request
+    const fetchPeople = async () => {
+      const data = await getAllPeople();
+
+      const peopleListWithFullNames = data.map((person: PersonInfo) => {
+        // Find personOne and personTwo objects based on personIdOne
+        const firstParent = data.find(
+          (p: PersonInfo) => p.id === person.firstparent_id
+        );
+        const secondtParent = data.find(
+          (p: PersonInfo) => p.id === person.secondparent_id
+        );
+        // Construct the new object with added full names
+        return {
+          ...person,
+          firstParentFullName: firstParent
+            ? `${firstParent.firstname} ${firstParent.lastname}`
+            : null,
+          secondtParentFullName: secondtParent
+            ? `${secondtParent.firstname} ${secondtParent.lastname}`
+            : null,
         };
-        const response = await axios.get(
-          "http://127.0.0.1:8000/person",
-          config
-        );
+      });
 
-        const peopleListWithFullNames = response.data.map(
-          (person: PersonInfo) => {
-            // Find personOne and personTwo objects based on personIdOne and personIdTwo
-            const firstParent = response.data.find(
-              (p: PersonInfo) => p.id === person.firstparent_id
-            );
-            const secondtParent = response.data.find(
-              (p: PersonInfo) => p.id === person.secondparent_id
-            );
-
-            // Construct the new object with added full names
-            return {
-              ...person,
-              firstParentFullName: firstParent
-                ? `${firstParent.firstname} ${firstParent.lastname}`
-                : null,
-              secondtParentFullName: secondtParent
-                ? `${secondtParent.firstname} ${secondtParent.lastname}`
-                : null,
-            };
-          }
-        );
-
-        setPeopleList(peopleListWithFullNames);
-      } catch (error) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response && axiosError.response.data) {
-          const errorData = axiosError.response.data as { message: string };
-          toast.error(errorData.message || "An error occurred", {
-            position: "top-center",
-          });
-        } else {
-          toast.error(axiosError.message || "An error occurred", {
-            position: "top-center",
-          });
-        }
-      }
+      setPeopleList(peopleListWithFullNames); // Set fetched data to state
     };
 
-    fetchData();
+    fetchPeople();
   }, []);
 
   const handleTableRowClick = (personId: number) => {
-    console.log(personId);
     navigate(`/my-users/${personId}`);
   };
 
@@ -85,39 +55,14 @@ const PeopleTable = () => {
     personId: number
   ) => {
     e.stopPropagation();
-    try {
-      const response = await axios.delete(
-        `http://127.0.0.1:8000/person/${personId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Replace with your actual token
-          },
-          withCredentials: true,
-        }
+    const response = await deletePerson(personId);
+    console.log(response);
+    // TODO Find a way do set this off on promise fulfilled
+    //? Possible solution?
+    if (response?.status === 200)
+      setPeopleList((prevList) =>
+        prevList.filter((item: PersonInfoFullNames) => item.id !== personId)
       );
-
-      if (response.status === 200) {
-        toast.success("User deleted", {
-          position: "top-center",
-        });
-        setPeopleList((prevList) =>
-          prevList.filter((item: PersonInfoFullNames) => item.id !== personId)
-        );
-      }
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.data) {
-        const errorData = axiosError.response.data as { message: string };
-        toast.error(errorData.message || "An error occurred", {
-          position: "top-center",
-        });
-      } else {
-        toast.error(axiosError.message || "An error occurred", {
-          position: "top-center",
-        });
-      }
-    }
   };
 
   return (

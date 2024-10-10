@@ -36,6 +36,13 @@ export interface PersonInfo {
   secondparent_id: number | null;
 }
 
+export interface AddPersonInfo {
+  firstname: string;
+  lastname: string;
+  firstparent_id: number | null;
+  secondparent_id: number | null;
+}
+
 export interface PersonInfoFullNames extends PersonInfo {
   firstParentFullName: string | null;
   secondtParentFullName: string | null;

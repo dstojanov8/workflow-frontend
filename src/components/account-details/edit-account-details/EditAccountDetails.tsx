@@ -79,39 +79,6 @@ const EditAccountDetals = ({
     );
     setChangePassword(false);
     setEditDetails(false);
-    // try {
-    //   const response = await axios.put(
-    //     `http://127.0.0.1:8000/user/${account.id}`,
-    //     {
-    //       firstname: data.firstname,
-    //       lastname: data.lastname,
-    //       username: data.username,
-    //       email: data.email,
-    //     },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${token}`, // Replace with your actual token
-    //       },
-    //       withCredentials: true,
-    //     }
-    //   );
-    //   if (response.status === 200) {
-    //     console.log("User updated!", response.data);
-    //   }
-    // } catch (error) {
-    //   const axiosError = error as AxiosError; // Type assertion for the error
-    //   if (axiosError.response) {
-    //     // The request was made and the server responded with a status code
-    //     console.error("Error:", axiosError.response.data);
-    //   } else if (axiosError.request) {
-    //     // The request was made but no response was received
-    //     console.error("Error:", axiosError.request);
-    //   } else {
-    //     // Something happened in setting up the request that triggered an error
-    //     console.error("Error:", axiosError.message);
-    //   }
-    // }
   };
 
   return (

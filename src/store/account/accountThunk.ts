@@ -1,12 +1,12 @@
-import { toast } from "react-toastify";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { AccountInfo, LoginInfo, RegistrationInfo } from "../../types";
-
-const backendURL = "http://127.0.0.1:8000";
-
-const token = localStorage.getItem("userToken");
+import {
+  loginAccount,
+  registerAccount,
+  updateAccount,
+} from "../../services/api";
 
 export const registerUserAsync = createAsyncThunk(
   "account/registerUserAsync",
@@ -15,28 +15,11 @@ export const registerUserAsync = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      await axios.post(
-        `${backendURL}/user/register`,
-        { email, username, password, firstname, lastname },
-        config
-      );
-      toast.success("Registration successful", {
-        position: "top-center",
-      });
+      await registerAccount({ email, username, password, firstname, lastname });
     } catch (error) {
       const axiosError = error as AxiosError;
-      console.log("axiosError", axiosError);
-      // return custom error message from API if any
       if (axiosError.response && axiosError.response.data) {
         const errorData = axiosError.response.data as { message: string };
-        toast.error(errorData.message || "An error occurred", {
-          position: "top-center",
-        });
         return rejectWithValue(errorData.message);
       } else {
         return rejectWithValue(axiosError.message);
@@ -49,31 +32,12 @@ export const loginUserAsync = createAsyncThunk(
   "account/login",
   async ({ usernameOrEmail, password }: LoginInfo, { rejectWithValue }) => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      };
-      const { data } = await axios.post(
-        `${backendURL}/user/login`,
-        { usernameOrEmail, password },
-        config
-      );
-      localStorage.setItem("userToken", data.userToken);
-      toast.success("Login successful", {
-        position: "top-center",
-      });
-      return data;
+      const response = await loginAccount({ usernameOrEmail, password });
+      return response?.data;
     } catch (error) {
       const axiosError = error as AxiosError;
-      console.log("axiosError", axiosError);
-      // return custom error message from API if any
       if (axiosError.response && axiosError.response.data) {
         const errorData = axiosError.response.data as { message: string };
-        toast.error(errorData.message || "An error occurred", {
-          position: "top-center",
-        });
         return rejectWithValue(errorData.message);
       } else {
         return rejectWithValue(axiosError.message);
@@ -89,32 +53,18 @@ export const updateUserAsync = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Replace with your actual token
-        },
-        withCredentials: true,
-      };
-      const { data } = await axios.put(
-        `${backendURL}/user/${id}`,
-        { firstname, lastname, username, email },
-        config
-      );
-      console.log(data);
-      toast.success("User updated", {
-        position: "top-center",
+      const response = await updateAccount({
+        id,
+        firstname,
+        lastname,
+        username,
+        email,
       });
-      return data;
+      return response?.data;
     } catch (error) {
       const axiosError = error as AxiosError;
-      console.log("axiosError", axiosError);
-      // return custom error message from API if any
       if (axiosError.response && axiosError.response.data) {
         const errorData = axiosError.response.data as { message: string };
-        toast.error(errorData.message || "An error occurred", {
-          position: "top-center",
-        });
         return rejectWithValue(errorData.message);
       } else {
         return rejectWithValue(axiosError.message);

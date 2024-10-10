@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosError } from "axios";
 
 import {
   StyledForm,
@@ -9,7 +8,7 @@ import {
   StyledLabel,
 } from "./AddPeople.styled";
 import Dropdown from "../dropdown/Dropdown";
-import { toast } from "react-toastify";
+import { addPerson, getAllPeople } from "../../services/api";
 
 const AddPeople = () => {
   const [firstname, setFirstname] = React.useState("");
@@ -20,107 +19,29 @@ const AddPeople = () => {
   const [peopeList, setPeopleList] = useState([]);
 
   const navigate = useNavigate();
-  const token = localStorage.getItem("userToken");
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    const fetchData = async () => {
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true, // include cookies in the request
-        };
-        const response = await axios.get(
-          "http://127.0.0.1:8000/person",
-          config
-        );
-
-        setPeopleList(response.data);
-      } catch (error) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response && axiosError.response.data) {
-          const errorData = axiosError.response.data as { message: string };
-          toast.error(errorData.message || "An error occurred", {
-            position: "top-center",
-          });
-        } else {
-          toast.error(axiosError.message || "An error occurred", {
-            position: "top-center",
-          });
-        }
-      }
+    const fetchPeople = async () => {
+      const data = await getAllPeople();
+      setPeopleList(data); // Set fetched data to state
     };
 
-    fetchData();
+    fetchPeople();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/person",
-        {
-          firstname: firstname,
-          lastname: lastname,
-          firstparent_id: parentOne || null,
-          secondparent_id: parentTwo || null,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Replace with your actual token
-          },
-          withCredentials: true,
-        }
-      );
-
-      if (response.status === 201) {
-        toast.success("User added", {
-          position: "top-center",
-        });
-        navigate("/my-users");
-      }
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.data) {
-        const errorData = axiosError.response.data as { message: string };
-        toast.error(errorData.message || "An error occurred", {
-          position: "top-center",
-        });
-      } else {
-        toast.error(axiosError.message || "An error occurred", {
-          position: "top-center",
-        });
-      }
-    }
+    const response = await addPerson({
+      firstname: firstname,
+      lastname: lastname,
+      firstparent_id: parentOne || null,
+      secondparent_id: parentTwo || null,
+    });
+    console.log(response);
+    // TODO Find a way do set this off on promise fulfilled
+    //? Possible solution?
+    if (response?.status === 201) navigate("/my-users");
   };
-
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   const response = await fetch('http://127.0.0.1:8000/person', {
-  //       method: "POST",
-  //       credentials: 'include',
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //           firstname: firstname,
-  //           lastname: lastname,
-  //           firstparent_id: null,
-  //           secondparent_id: null
-  //         }),
-  //       });
-
-  //       if (response.ok) {
-  //         console.log("User added!", response.text());
-  //         navigate('/my-users');
-  //       } else {
-  //         console.error('error');
-  //       }
-  // };
 
   const firstnameEntered = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirstname(e.target.value);
