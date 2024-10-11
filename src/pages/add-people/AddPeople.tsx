@@ -7,7 +7,7 @@ import {
   StyledButton,
   StyledLabel,
 } from "./AddPeople.styled";
-import Dropdown from "../dropdown/Dropdown";
+import Dropdown from "../../components/dropdown/Dropdown";
 import { addPerson, getAllPeople } from "../../services/api";
 
 const AddPeople = () => {

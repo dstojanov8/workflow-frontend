@@ -32,8 +32,9 @@ export const loginUserAsync = createAsyncThunk(
   "account/login",
   async ({ usernameOrEmail, password }: LoginInfo, { rejectWithValue }) => {
     try {
-      const response = await loginAccount({ usernameOrEmail, password });
-      return response?.data;
+      const { data } = await loginAccount({ usernameOrEmail, password });
+      localStorage.setItem("userToken", data.userToken);
+      return data;
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response && axiosError.response.data) {

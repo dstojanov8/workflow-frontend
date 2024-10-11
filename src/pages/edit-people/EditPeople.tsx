@@ -7,7 +7,7 @@ import {
   StyledButton,
   StyledLabel,
 } from "./EditPeople.styled";
-import Dropdown from "../dropdown/Dropdown";
+import Dropdown from "../../components/dropdown/Dropdown";
 import { getAllPeople, getPerson, updatePerson } from "../../services/api";
 
 const EditPeople = () => {

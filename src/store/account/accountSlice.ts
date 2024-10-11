@@ -7,14 +7,14 @@ import {
 } from "./accountThunk";
 import { AccountState } from "../../types";
 
-const userToken = localStorage.getItem("userToken")
-  ? localStorage.getItem("userToken")
-  : null;
+// const userToken = localStorage.getItem("userToken")
+//   ? localStorage.getItem("userToken")
+//   : null;
 
 const initialState: AccountState = {
   accountInfo: null,
   loading: false,
-  userToken,
+  userToken: null,
   error: null,
   success: false,
 };
