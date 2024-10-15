@@ -1,18 +1,20 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import App from './App';
-import Home from './components/home-page/Home';
-import PeopleTable from "./components/people-table/PeopleTable";
-import LoginForm from "./components/login-form/LoginForm";
-import AddPeople from "./components/add-people/AddPeople";
-import ProtectedRoute from "./components/protected-route/ProtectedRoute";
+
+import App from "./App";
+import AddPeople from "./pages/add-people/AddPeople";
 import NotFoundRedirect from "./components/not-found-redirect/NotFoundRedirect";
-import RegisterForm from "./components/register-form/RegisterForm";
-import EditPeople from "./components/edit-people/EditPeople";
-import PeopleTree from "./components/people-tree/PeopleTree";
+import ProtectedRoute from "./components/protected-route/ProtectedRoute";
+import Home from "./pages/home-page/Home";
+import PeopleTable from "./pages/people-table/PeopleTable";
+import EditPeople from "./pages/edit-people/EditPeople";
+import PeopleTree from "./pages/people-tree/PeopleTree";
+import AccountDetails from "./pages/account-details/AccountDetails";
+import LoginForm from "./pages/login-form/LoginForm";
+import RegisterForm from "./pages/register-form/RegisterForm";
 
 const routes: RouteObject[] = [
   {
-    path: '/',
+    path: "/",
     element: <App />,
     children: [
       {
@@ -23,20 +25,24 @@ const routes: RouteObject[] = [
             element: <Home />,
           },
           {
-            path: 'my-users',
+            path: "my-users",
             element: <PeopleTable />,
           },
           {
-            path: 'my-users/:id',
-            element: <EditPeople /> // New User Details route
+            path: "my-users/:id",
+            element: <EditPeople />, // New User Details route
           },
           {
-            path: 'tree',
+            path: "workflow",
             element: <PeopleTree />,
           },
           {
-            path: 'add-user',
-            element: <AddPeople />
+            path: "add-user",
+            element: <AddPeople />,
+          },
+          {
+            path: "account-details",
+            element: <AccountDetails />,
           },
           // {
           //   path: 'user/:id',
@@ -50,16 +56,16 @@ const routes: RouteObject[] = [
         ],
       },
       {
-        path: 'login',
-        element: <LoginForm />
+        path: "login",
+        element: <LoginForm />,
       },
       {
-        path: 'register',
-        element: <RegisterForm />
+        path: "register",
+        element: <RegisterForm />,
       },
       {
-        path: '*',
-        element: <NotFoundRedirect />
+        path: "*",
+        element: <NotFoundRedirect />,
       },
     ],
   },

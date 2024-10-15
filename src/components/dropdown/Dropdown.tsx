@@ -1,16 +1,18 @@
-import { PersonInfo } from '../people-table/PeopleTable';
-import { DropdownWrapper, StyledOption, StyledSelect } from './Dropdown.styled';
-
+import { PersonInfo } from "../../types";
+import { DropdownWrapper, StyledOption, StyledSelect } from "./Dropdown.styled";
 
 interface DropdownProps {
-    options: PersonInfo[];
-    selectedOption: number;
-    setSelectedOption: React.Dispatch<React.SetStateAction<number>>;
+  options: PersonInfo[];
+  selectedOption: number;
+  setSelectedOption: React.Dispatch<React.SetStateAction<number>>;
 }
 
 // Dropdown component
-const Dropdown = ({ options, selectedOption, setSelectedOption }: DropdownProps) => {
-
+const Dropdown = ({
+  options,
+  selectedOption,
+  setSelectedOption,
+}: DropdownProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(Number(e.target.value));
   };
@@ -21,7 +23,7 @@ const Dropdown = ({ options, selectedOption, setSelectedOption }: DropdownProps)
         <StyledOption value="">Select an option</StyledOption>
         {options.map((option: PersonInfo) => (
           <StyledOption key={option.id} value={option.id}>
-            {option.firstname + ' ' + option.lastname}
+            {option.firstname + " " + option.lastname}
           </StyledOption>
         ))}
       </StyledSelect>

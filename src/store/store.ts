@@ -1,16 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore } from 'redux-persist';
+import { persistStore } from "redux-persist";
 import { persistedAccountReducer } from "./persisted-reducers";
 
-
 export const store = configureStore({
-    reducer: {
-        account: persistedAccountReducer,
-    },
-    middleware: getDefaultMiddleware =>
-        getDefaultMiddleware({
-          serializableCheck: false,
-        }),
+  reducer: {
+    account: persistedAccountReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export const persistor = persistStore(store);

@@ -30,7 +30,7 @@ const NavDropdown = ({ placeholderName, routes }: NavDropdownProps) => {
       <StyledButton>{placeholderName}</StyledButton>
       {isDropdownVisible && <NavDropdownMenu routes={routes} />}
     </MenuWrapper>
-  )
-}
+  );
+};
 
 export default NavDropdown;
